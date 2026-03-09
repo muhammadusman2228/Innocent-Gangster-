@@ -32,9 +32,9 @@ const GANG = [
         funnyIntro: "Acts like a CEO but still asks his mom for pocket money.",
         quote: "\"Work smart, not hard... but also not at all if possible.\"",
         phone: "923001234567",             // ← replace with real WhatsApp number
-        coverPhoto: "assets/friends/member1/cover.jpg",
+        coverPhoto: "assets/friends/member1/img.jpg",
         photos: [
-            "assets/friends/member1/photo1.jpg",
+            "assets/friends/member1/imgu.jpg",
             "assets/friends/member1/photo2.jpg",
             "assets/friends/member1/photo3.jpg",
         ],
