@@ -8,152 +8,148 @@
 
 /* ── Particle background ───────────────────────────── */
 function initParticles() {
-    const canvas = document.getElementById('bg-canvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+  const canvas = document.getElementById('bg-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
 
-    let W = canvas.width = window.innerWidth;
-    let H = canvas.height = window.innerHeight;
+  let W = canvas.width = window.innerWidth;
+  let H = canvas.height = window.innerHeight;
 
-    window.addEventListener('resize', () => {
-        W = canvas.width = window.innerWidth;
-        H = canvas.height = window.innerHeight;
+  window.addEventListener('resize', () => {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  });
+
+  const PARTICLE_COUNT = 70;
+  const particles = [];
+  const colors = ['#00ff87', '#8b5cf6', '#ff6b35', '#06b6d4', '#f59e0b'];
+
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    particles.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 1.8 + 0.3,
+      vx: (Math.random() - 0.5) * 0.35,
+      vy: (Math.random() - 0.5) * 0.35,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      alpha: Math.random() * 0.55 + 0.1,
+      pulse: Math.random() * Math.PI * 2, // phase offset for pulsing
+    });
+  }
+
+  let mouseX = W / 2, mouseY = H / 2;
+  document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    particles.forEach(p => {
+      // Subtle attraction to cursor
+      const dx = mouseX - p.x;
+      const dy = mouseY - p.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 200) {
+        p.vx += (dx / dist) * 0.006;
+        p.vy += (dy / dist) * 0.006;
+      }
+
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vx *= 0.99;
+      p.vy *= 0.99;
+      p.pulse += 0.02;
+
+      if (p.x < 0) p.x = W;
+      if (p.x > W) p.x = 0;
+      if (p.y < 0) p.y = H;
+      if (p.y > H) p.y = 0;
+
+      // Pulsing radius
+      const pr = p.r + Math.sin(p.pulse) * 0.4;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, pr, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = p.alpha;
+      ctx.fill();
     });
 
-    // Particle config
-    const PARTICLE_COUNT = 60;
-    const particles = [];
-    const colors = ['#00ff87', '#8b5cf6', '#ff6b35', '#06b6d4', '#f59e0b'];
-
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
-        particles.push({
-            x: Math.random() * W,
-            y: Math.random() * H,
-            r: Math.random() * 1.5 + 0.3,
-            vx: (Math.random() - 0.5) * 0.3,
-            vy: (Math.random() - 0.5) * 0.3,
-            color: colors[Math.floor(Math.random() * colors.length)],
-            alpha: Math.random() * 0.5 + 0.1,
-        });
-    }
-
-    let mouseX = W / 2, mouseY = H / 2;
-    document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
-
-    function draw() {
-        ctx.clearRect(0, 0, W, H);
-
-        particles.forEach(p => {
-            // Subtle attraction to cursor
-            const dx = mouseX - p.x;
-            const dy = mouseY - p.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 200) {
-                p.vx += (dx / dist) * 0.005;
-                p.vy += (dy / dist) * 0.005;
-            }
-
-            p.x += p.vx;
-            p.y += p.vy;
-
-            // Friction
-            p.vx *= 0.99;
-            p.vy *= 0.99;
-
-            // Wrap around edges
-            if (p.x < 0) p.x = W;
-            if (p.x > W) p.x = 0;
-            if (p.y < 0) p.y = H;
-            if (p.y > H) p.y = 0;
-
-            // Draw particle
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-            ctx.fillStyle = p.color;
-            ctx.globalAlpha = p.alpha;
-            ctx.fill();
-        });
-
-        // Draw connections between close particles
-        ctx.globalAlpha = 1;
-        for (let i = 0; i < particles.length; i++) {
-            for (let j = i + 1; j < particles.length; j++) {
-                const dx = particles[i].x - particles[j].x;
-                const dy = particles[i].y - particles[j].y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-
-                if (dist < 100) {
-                    ctx.beginPath();
-                    ctx.moveTo(particles[i].x, particles[i].y);
-                    ctx.lineTo(particles[j].x, particles[j].y);
-                    ctx.strokeStyle = particles[i].color;
-                    ctx.globalAlpha = (1 - dist / 100) * 0.12;
-                    ctx.lineWidth = 0.5;
-                    ctx.stroke();
-                }
-            }
+    // Connections between close particles
+    ctx.globalAlpha = 1;
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 110) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = particles[i].color;
+          ctx.globalAlpha = (1 - dist / 110) * 0.13;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
         }
-        ctx.globalAlpha = 1;
-
-        requestAnimationFrame(draw);
+      }
     }
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(draw);
+  }
 
-    draw();
+  draw();
 }
 
 /* ── 3D Tilt on card hover ─────────────────────────── */
 function initTilt(card) {
-    const MAX_TILT = 12; // degrees
-    const MAX_SHINE = 80; // pixels offset
+  const MAX_TILT = 12;
 
-    card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-        const rotateY = ((e.clientX - centerX) / (rect.width / 2)) * MAX_TILT;
-        const rotateX = -((e.clientY - centerY) / (rect.height / 2)) * MAX_TILT;
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const rotateY = ((e.clientX - centerX) / (rect.width / 2)) * MAX_TILT;
+    const rotateX = -((e.clientY - centerY) / (rect.height / 2)) * MAX_TILT;
+    card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
 
-        card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
+    const shine = card.querySelector('.card-shine');
+    if (shine) {
+      const shineX = ((e.clientX - rect.left) / rect.width) * 100;
+      const shineY = ((e.clientY - rect.top) / rect.height) * 100;
+      shine.style.background = `radial-gradient(circle at ${shineX}% ${shineY}%, rgba(255,255,255,0.07) 0%, transparent 65%)`;
+    }
+  });
 
-        // Shine effect
-        const shine = card.querySelector('.card-shine');
-        if (shine) {
-            const shineX = ((e.clientX - rect.left) / rect.width) * 100;
-            const shineY = ((e.clientY - rect.top) / rect.height) * 100;
-            shine.style.background = `radial-gradient(circle at ${shineX}% ${shineY}%, rgba(255,255,255,0.06) 0%, transparent 65%)`;
-        }
-    });
-
-    card.addEventListener('mouseleave', () => {
-        card.style.transform = '';
-        const shine = card.querySelector('.card-shine');
-        if (shine) shine.style.background = '';
-    });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+    const shine = card.querySelector('.card-shine');
+    if (shine) shine.style.background = '';
+  });
 }
 
 /* ── Render one card ───────────────────────────────── */
 function buildCard(friend) {
-    const card = document.createElement('div');
-    card.className = 'friend-card';
-    card.style.setProperty('--card-color', friend.color);
+  const card = document.createElement('article');
+  card.className = 'friend-card';
+  card.style.setProperty('--card-color', friend.color);
+  card.setAttribute('role', 'button');
+  card.setAttribute('tabindex', '0');
+  card.setAttribute('aria-label', `View ${friend.name}'s profile`);
 
-    // Cover photo or placeholder
-    const hasCover = friend.coverPhoto && friend.coverPhoto.trim() !== '';
-    const coverHTML = hasCover
-        ? `<img src="${friend.coverPhoto}" alt="${friend.name}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=card-cover-placeholder><span>${friend.name.charAt(0)}</span><p>Add your photo</p></div>'">`
-        : `<div class="card-cover-placeholder">
-         <span>${friend.name.charAt(0)}</span>
-         <p>No photo yet</p>
-       </div>`;
+  const hasCover = friend.coverPhoto && friend.coverPhoto.trim() !== '';
+  const coverHTML = hasCover
+    ? `<img src="${friend.coverPhoto}" alt="${friend.name}" loading="lazy"
+               onerror="this.parentElement.innerHTML='<div class=card-cover-placeholder><span>${friend.name.charAt(0)}</span><p>Add photo</p></div>'">`
+    : `<div class="card-cover-placeholder">
+             <span>${friend.name.charAt(0)}</span>
+             <p>No photo yet</p>
+           </div>`;
 
-    card.innerHTML = `
+  card.innerHTML = `
     <div class="card-cover">
       ${coverHTML}
       <div class="card-cover-overlay"></div>
       <div class="card-rank">${friend.rank}</div>
-      <div class="card-photo-count">
-        <span>📸 ${friend.photos.length}</span>
-      </div>
+      <div class="card-photo-count"><span>📸 ${friend.photos.length}</span></div>
     </div>
 
     <div class="card-shine"></div>
@@ -186,34 +182,74 @@ function buildCard(friend) {
     </div>
   `;
 
-    // Click card → open profile
-    card.addEventListener('click', () => openProfile(friend));
+  // Click card → navigate to profile page
+  const goToProfile = () => {
+    card.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+    card.style.transform = 'scale(0.96)';
+    card.style.opacity = '0.7';
+    setTimeout(() => {
+      window.location.href = `profile.html?id=${friend.id}`;
+    }, 200);
+  };
 
-    // 3D tilt
-    initTilt(card);
+  card.addEventListener('click', goToProfile);
+  card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') goToProfile(); });
 
-    return card;
+  initTilt(card);
+  return card;
+}
+
+/* ── Animate cards on scroll ───────────────────────── */
+function initScrollAnimations() {
+  const cards = document.querySelectorAll('.friend-card');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.animationPlayState = 'running';
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  cards.forEach(card => obs.observe(card));
+}
+
+/* ── Count-up animation for stats ─────────────────── */
+function animateCount(el, target, duration = 1200) {
+  const start = performance.now();
+  const update = (now) => {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+    el.textContent = Math.floor(eased * target);
+    if (progress < 1) requestAnimationFrame(update);
+    else el.textContent = target;
+  };
+  requestAnimationFrame(update);
 }
 
 /* ── Render all cards ──────────────────────────────── */
 function renderCards() {
-    const grid = document.getElementById('cards-grid');
-    if (!grid) return;
+  const grid = document.getElementById('cards-grid');
+  if (!grid) return;
 
-    if (!window.GANG || !GANG.length) {
-        grid.innerHTML = '<p style="color:var(--muted);text-align:center;grid-column:1/-1;padding:60px">No friends added yet in data.js.</p>';
-        return;
-    }
+  if (!window.GANG || !GANG.length) {
+    grid.innerHTML = '<p style="color:var(--muted);text-align:center;grid-column:1/-1;padding:60px">No friends added yet in data.js.</p>';
+    return;
+  }
 
-    GANG.forEach(friend => grid.appendChild(buildCard(friend)));
+  GANG.forEach(friend => grid.appendChild(buildCard(friend)));
 
-    // Update gang count in hero
-    const countEl = document.getElementById('gang-count');
-    if (countEl) countEl.textContent = GANG.length;
+  // Update gang count with animation
+  const countEl = document.getElementById('gang-count');
+  if (countEl) {
+    setTimeout(() => animateCount(countEl, GANG.length, 1500), 600);
+  }
+
+  setTimeout(initScrollAnimations, 100);
 }
 
 /* ── Init ──────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
-    initParticles();
-    renderCards();
+  initParticles();
+  renderCards();
 });

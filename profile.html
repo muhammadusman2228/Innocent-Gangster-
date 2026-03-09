@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Member Profile – Innocent Gangsters 🔥</title>
+    <meta name="description" content="Full profile of an Innocent Gangsters crew member." />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+
+    <!-- Shared style -->
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- Favicon -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>" />
+
+    <style>
+        /* ── Profile Page Layout ─────────────────────────── */
+        .profile-page {
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── Back button ─────────────────────────────────── */
+        .back-btn {
+            position: fixed;
+            top: 24px;
+            left: 24px;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            background: rgba(13, 17, 23, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 99px;
+            color: var(--white);
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            text-decoration: none;
+            backdrop-filter: blur(12px);
+            transition: var(--transition);
+            animation: fadeInDown 0.5s ease both;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: var(--member-color, var(--green));
+            color: var(--member-color, var(--green));
+            transform: translateX(-3px);
+        }
+
+        .back-btn svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .back-btn:hover svg {
+            transform: translateX(-4px);
+        }
+
+        /* ── Hero Banner ─────────────────────────────────── */
+        .hero-banner {
+            position: relative;
+            width: 100%;
+            height: 70vh;
+            min-height: 400px;
+            max-height: 700px;
+            overflow: hidden;
+            background: #0a0a12;
+        }
+
+        .hero-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            animation: heroZoomIn 8s ease-out forwards;
+        }
+
+        @keyframes heroZoomIn {
+            from {
+                transform: scale(1.1);
+            }
+
+            to {
+                transform: scale(1.0);
+            }
+        }
+
+        .hero-banner-gradient {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom,
+                    rgba(6, 8, 15, 0.2) 0%,
+                    rgba(6, 8, 15, 0.0) 30%,
+                    rgba(6, 8, 15, 0.7) 70%,
+                    rgba(6, 8, 15, 1) 100%);
+        }
+
+        /* Side gradient with member color */
+        .hero-banner-side {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg,
+                    color-mix(in srgb, var(--member-color, var(--green)) 15%, transparent) 0%,
+                    transparent 50%);
+            pointer-events: none;
+        }
+
+        /* ── Member name block over banner ───────────────── */
+        .hero-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 0 40px 40px;
+            animation: fadeInUp 0.8s ease 0.3s both;
+        }
+
+        .hero-rank-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            padding: 5px 14px;
+            border-radius: 99px;
+            border: 1px solid color-mix(in srgb, var(--member-color, var(--green)) 40%, transparent);
+            background: color-mix(in srgb, var(--member-color, var(--green)) 12%, transparent);
+            color: var(--member-color, var(--green));
+            backdrop-filter: blur(8px);
+            margin-bottom: 12px;
+        }
+
+        .hero-name {
+            font-family: var(--font-heading);
+            font-size: clamp(3.5rem, 8vw, 7rem);
+            line-height: 0.9;
+            color: var(--white);
+            text-shadow: 0 4px 40px rgba(0, 0, 0, 0.6);
+            margin-bottom: 6px;
+        }
+
+        .hero-nickname {
+            font-size: 1rem;
+            color: rgba(240, 244, 255, 0.55);
+            letter-spacing: 0.08em;
+        }
+
+        /* ── Content area ────────────────────────────────── */
+        .profile-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 48px 32px 80px;
+        }
+
+        /* ── Quote ───────────────────────────────────────── */
+        .quote-block {
+            border-left: 3px solid var(--member-color, var(--green));
+            padding: 12px 24px;
+            margin-bottom: 48px;
+            font-size: 1.05rem;
+            font-style: italic;
+            color: var(--muted);
+            line-height: 1.7;
+            position: relative;
+            animation: fadeInUp 0.7s ease 0.4s both;
+        }
+
+        .quote-block::before {
+            content: '"';
+            font-family: var(--font-heading);
+            font-size: 5rem;
+            color: var(--member-color, var(--green));
+            opacity: 0.15;
+            position: absolute;
+            top: -20px;
+            left: 16px;
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        /* ── Section titles ──────────────────────────────── */
+        .section-title {
+            font-size: 0.62rem;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            animation: fadeInUp 0.6s ease both;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* ── Superpower card ─────────────────────────────── */
+        .superpower-card {
+            background: color-mix(in srgb, var(--member-color, var(--green)) 7%, transparent);
+            border: 1px solid color-mix(in srgb, var(--member-color, var(--green)) 22%, transparent);
+            border-radius: 20px;
+            padding: 20px 24px;
+            margin-bottom: 48px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            animation: fadeInUp 0.7s ease 0.5s both;
+            transition: var(--transition);
+        }
+
+        .superpower-card:hover {
+            border-color: color-mix(in srgb, var(--member-color, var(--green)) 45%, transparent);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px color-mix(in srgb, var(--member-color, var(--green)) 10%, transparent);
+        }
+
+        .superpower-icon {
+            font-size: 1.8rem;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        .superpower-label {
+            font-size: 0.58rem;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--member-color, var(--green));
+            margin-bottom: 5px;
+        }
+
+        .superpower-text {
+            font-size: 0.95rem;
+            color: var(--white);
+            line-height: 1.55;
+        }
+
+        /* ── Photo Gallery ───────────────────────────────── */
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 14px;
+            margin-bottom: 52px;
+        }
+
+        .photo-thumb {
+            aspect-ratio: 3/4;
+            overflow: hidden;
+            border-radius: 16px;
+            cursor: pointer;
+            position: relative;
+            background: #111;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .photo-thumb:first-child {
+            grid-column: span 2;
+            aspect-ratio: 16/9;
+        }
+
+        .photo-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            transition: transform 0.5s ease;
+            display: block;
+        }
+
+        .photo-thumb:hover img {
+            transform: scale(1.08);
+        }
+
+        .photo-thumb::after {
+            content: '⤢';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .photo-thumb:hover::after {
+            opacity: 1;
+        }
+
+        .photo-thumb:hover {
+            border-color: color-mix(in srgb, var(--member-color, var(--green)) 50%, transparent);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            transform: translateY(-3px);
+        }
+
+        /* ── Biodata Grid ────────────────────────────────── */
+        .biodata-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 14px;
+            margin-bottom: 52px;
+        }
+
+        .biodata-item {
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 18px 20px;
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .biodata-item.visible {
+            animation: fadeSlideUp 0.5s ease forwards;
+        }
+
+        @keyframes fadeSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .biodata-item:hover {
+            border-color: color-mix(in srgb, var(--member-color, var(--green)) 35%, transparent);
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateY(-2px);
+        }
+
+        .biodata-label {
+            font-size: 0.58rem;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--member-color, var(--green));
+            margin-bottom: 6px;
+        }
+
+        .biodata-value {
+            font-size: 0.9rem;
+            color: var(--white);
+            line-height: 1.5;
+        }
+
+        /* ── Funny intro card ────────────────────────────── */
+        .intro-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 24px 28px;
+            margin-bottom: 48px;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--muted);
+            animation: fadeInUp 0.7s ease 0.35s both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .intro-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg,
+                    transparent,
+                    var(--member-color, var(--green)),
+                    transparent);
+        }
+
+        /* ── WhatsApp CTA ────────────────────────────────── */
+        .wa-cta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            width: 100%;
+            padding: 20px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, rgba(37, 211, 102, 0.15), rgba(37, 211, 102, 0.04));
+            border: 1px solid rgba(37, 211, 102, 0.3);
+            color: #25d366;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition);
+            letter-spacing: 0.03em;
+            animation: fadeInUp 0.7s ease 0.6s both;
+        }
+
+        .wa-cta:hover {
+            background: linear-gradient(135deg, rgba(37, 211, 102, 0.22), rgba(37, 211, 102, 0.08));
+            border-color: rgba(37, 211, 102, 0.55);
+            transform: translateY(-3px);
+            box-shadow: 0 16px 50px rgba(37, 211, 102, 0.18);
+        }
+
+        .wa-cta svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        /* ── Lightbox ────────────────────────────────────── */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.96);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .lightbox img {
+            max-width: 90vw;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 16px;
+            box-shadow: 0 0 80px rgba(0, 0, 0, 0.8);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .lightbox.open img {
+            transform: scale(1);
+        }
+
+        .lb-btn {
+            position: absolute;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .lb-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        #lb-close {
+            top: 20px;
+            right: 20px;
+            font-size: 1.2rem;
+        }
+
+        #lb-prev {
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+        }
+
+        #lb-next {
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+        }
+
+        #lb-prev:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        #lb-next:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        /* ── Error state ─────────────────────────────────── */
+        .error-state {
+            text-align: center;
+            padding: 120px 32px;
+        }
+
+        .error-state h1 {
+            font-family: var(--font-heading);
+            font-size: 5rem;
+            color: var(--green);
+        }
+
+        .error-state p {
+            color: var(--muted);
+            margin: 16px 0 32px;
+        }
+
+        /* ── Responsive ──────────────────────────────────── */
+        @media (max-width: 640px) {
+            .hero-info {
+                padding: 0 20px 28px;
+            }
+
+            .profile-content {
+                padding: 32px 16px 60px;
+            }
+
+            .photo-gallery {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .photo-thumb:first-child {
+                grid-column: 1 / -1;
+                aspect-ratio: 4/3;
+            }
+
+            .biodata-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .back-btn {
+                top: 16px;
+                left: 16px;
+                padding: 8px 14px;
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Particles canvas -->
+    <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+    <!-- Back Button -->
+    <a href="index.html" class="back-btn" id="back-btn">
+        <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        Back to Crew
+    </a>
+
+    <!-- Main page content injected by JS -->
+    <div class="profile-page" id="profile-page"></div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lb-btn" id="lb-close">✕</button>
+        <button class="lb-btn" id="lb-prev">‹</button>
+        <img id="lb-img" src="" alt="Photo" />
+        <button class="lb-btn" id="lb-next">›</button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/data.js"></script>
+    <script>
+        'use strict';
+
+        /* ── Particles (same as index) ──────────────────── */
+        function initParticles() {
+            const canvas = document.getElementById('bg-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let W = canvas.width = window.innerWidth;
+            let H = canvas.height = window.innerHeight;
+            window.addEventListener('resize', () => { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; });
+            const colors = ['#00ff87', '#8b5cf6', '#ff6b35', '#06b6d4', '#f59e0b'];
+            const particles = Array.from({ length: 50 }, () => ({
+                x: Math.random() * W, y: Math.random() * H,
+                r: Math.random() * 1.2 + 0.3,
+                vx: (Math.random() - 0.5) * 0.25, vy: (Math.random() - 0.5) * 0.25,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                alpha: Math.random() * 0.4 + 0.1
+            }));
+            let mX = W / 2, mY = H / 2;
+            document.addEventListener('mousemove', e => { mX = e.clientX; mY = e.clientY; });
+            function draw() {
+                ctx.clearRect(0, 0, W, H);
+                particles.forEach(p => {
+                    const dx = mX - p.x, dy = mY - p.y;
+                    const d = Math.sqrt(dx * dx + dy * dy);
+                    if (d < 180) { p.vx += (dx / d) * 0.004; p.vy += (dy / d) * 0.004; }
+                    p.x += p.vx; p.y += p.vy;
+                    p.vx *= 0.99; p.vy *= 0.99;
+                    if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+                    if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+                    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fillStyle = p.color; ctx.globalAlpha = p.alpha; ctx.fill();
+                });
+                ctx.globalAlpha = 1;
+                requestAnimationFrame(draw);
+            }
+            draw();
+        }
+
+        /* ── Lightbox ────────────────────────────────────── */
+        let lbPhotos = [], lbIdx = 0;
+        function openLightbox(photos, idx) {
+            lbPhotos = photos; lbIdx = idx;
+            showLbPhoto();
+            document.getElementById('lightbox').classList.add('open');
+        }
+        function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+        function showLbPhoto() {
+            const img = document.getElementById('lb-img');
+            if (img && lbPhotos[lbIdx]) img.src = lbPhotos[lbIdx];
+        }
+        document.getElementById('lb-close').onclick = closeLightbox;
+        document.getElementById('lb-next').onclick = () => { lbIdx = (lbIdx + 1) % lbPhotos.length; showLbPhoto(); };
+        document.getElementById('lb-prev').onclick = () => { lbIdx = (lbIdx - 1 + lbPhotos.length) % lbPhotos.length; showLbPhoto(); };
+        document.getElementById('lightbox').addEventListener('click', e => { if (e.target === e.currentTarget) closeLightbox(); });
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') closeLightbox();
+            if (document.getElementById('lightbox').classList.contains('open')) {
+                if (e.key === 'ArrowRight') { lbIdx = (lbIdx + 1) % lbPhotos.length; showLbPhoto(); }
+                if (e.key === 'ArrowLeft') { lbIdx = (lbIdx - 1 + lbPhotos.length) % lbPhotos.length; showLbPhoto(); }
+            }
+        });
+
+        /* ── Animate biodata items on scroll ─────────────── */
+        function animateBiodata() {
+            const items = document.querySelectorAll('.biodata-item');
+            const obs = new IntersectionObserver((entries) => {
+                entries.forEach((entry, i) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            items.forEach(item => obs.observe(item));
+        }
+
+        /* ── Main render ─────────────────────────────────── */
+        function renderProfile() {
+            const params = new URLSearchParams(window.location.search);
+            const memberId = params.get('id');
+            const page = document.getElementById('profile-page');
+
+            if (!memberId || !window.GANG) { showError('No member specified.'); return; }
+
+            const friend = GANG.find(m => m.id === memberId);
+            if (!friend) { showError(`Member "${memberId}" not found.`); return; }
+
+            // Set CSS variable for member color
+            document.documentElement.style.setProperty('--member-color', friend.color);
+            document.title = `${friend.name} – Innocent Gangsters 🔥`;
+
+            // Update back button
+            const backBtn = document.getElementById('back-btn');
+            if (backBtn) backBtn.style.setProperty('--member-color', friend.color);
+
+            const { name, nickname, rank, quote, phone, coverPhoto, photos, biodata, funnyIntro } = friend;
+
+            const whatsappUrl = phone
+                ? `https://wa.me/${phone}?text=${encodeURIComponent(`Hey ${name.split(' ')[0]}! 👋 Saw your profile on Innocent Gangsters!`)}`
+                : null;
+
+            // Photo gallery HTML – filter out photos that don't exist by using onerror
+            const allPhotos = [coverPhoto, ...photos].filter(Boolean);
+            const uniquePhotos = [...new Set(allPhotos)];
+
+            const galleryHTML = uniquePhotos.map((src, i) => `
+                <div class="photo-thumb" data-idx="${i}" style="animation-delay:${0.1 + i * 0.1}s; animation: fadeInUp 0.6s ease ${0.1 + i * 0.1}s both;">
+                    <img src="${src}" alt="${name} photo ${i + 1}" loading="lazy"
+                         onerror="this.closest('.photo-thumb').style.display='none'">
+                </div>
+            `).join('');
+
+            const biodataFields = [
+                { key: 'realName', label: '📛 Real Name' },
+                { key: 'age', label: '🎂 Age' },
+                { key: 'city', label: '📍 City' },
+                { key: 'program', label: '🎓 Program' },
+                { key: 'hobbies', label: '🎯 Hobbies' },
+                { key: 'biggestFear', label: '😱 Biggest Fear' },
+                { key: 'bestMemory', label: '💫 Best Memory' },
+                { key: 'funFact', label: '🤔 Fun Fact' },
+            ];
+
+            const biodataHTML = biodataFields.map(f => `
+                <div class="biodata-item">
+                    <div class="biodata-label">${f.label}</div>
+                    <div class="biodata-value">${biodata[f.key] || '—'}</div>
+                </div>
+            `).join('');
+
+            page.innerHTML = `
+                <!-- Hero Banner -->
+                <div class="hero-banner">
+                    <img src="${coverPhoto}" alt="${name}"
+                         onerror="this.style.background='#0d1117';this.style.display='none'">
+                    <div class="hero-banner-gradient"></div>
+                    <div class="hero-banner-side"></div>
+                    <div class="hero-info">
+                        <div class="hero-rank-badge">${rank}</div>
+                        <h1 class="hero-name">${name}</h1>
+                        <div class="hero-nickname">${nickname}</div>
+                    </div>
+                </div>
+
+                <!-- Content -->
+                <div class="profile-content">
+
+                    <!-- Funny intro -->
+                    <div class="intro-card">${funnyIntro}</div>
+
+                    <!-- Quote -->
+                    <blockquote class="quote-block">${quote}</blockquote>
+
+                    <!-- Superpower -->
+                    <div class="superpower-card">
+                        <div class="superpower-icon">⚡</div>
+                        <div>
+                            <div class="superpower-label">Secret Superpower</div>
+                            <div class="superpower-text">${biodata.superpower}</div>
+                        </div>
+                    </div>
+
+                    <!-- Photos -->
+                    <div class="section-title">Gallery</div>
+                    <div class="photo-gallery" id="photo-gallery">
+                        ${galleryHTML}
+                    </div>
+
+                    <!-- Biodata -->
+                    <div class="section-title">The Files</div>
+                    <div class="biodata-grid">${biodataHTML}</div>
+
+                    <!-- WhatsApp -->
+                    ${whatsappUrl ? `
+                        <a class="wa-cta" href="${whatsappUrl}" target="_blank" rel="noopener noreferrer">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                            </svg>
+                            Message ${name.split(' ')[0]} on WhatsApp
+                        </a>
+                    ` : ''}
+
+                </div>
+            `;
+
+            // Wire up photo thumbnails → lightbox
+            const thumbs = document.querySelectorAll('.photo-thumb');
+            thumbs.forEach(thumb => {
+                thumb.addEventListener('click', () => {
+                    const idx = parseInt(thumb.dataset.idx);
+                    openLightbox(uniquePhotos, idx);
+                });
+            });
+
+            // Animate biodata on scroll
+            setTimeout(animateBiodata, 300);
+        }
+
+        function showError(msg) {
+            document.getElementById('profile-page').innerHTML = `
+                <div class="error-state">
+                    <h1>404</h1>
+                    <p>${msg}</p>
+                    <a href="index.html" class="back-btn" style="position:static;display:inline-flex">← Back to Crew</a>
+                </div>`;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initParticles();
+            renderProfile();
+        });
+    </script>
+
+</body>
+
+</html>

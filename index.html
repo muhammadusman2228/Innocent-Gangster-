@@ -17,7 +17,6 @@
     <!-- Stylesheets (order matters) -->
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/cards.css" />
-    <link rel="stylesheet" href="css/profile.css" />
 
     <!-- Favicon emoji -->
     <link rel="icon"
@@ -26,6 +25,9 @@
 
 <body>
 
+    <!-- Cursor glow -->
+    <div class="cursor-glow" id="cursor-glow"></div>
+
     <!-- Particle Canvas -->
     <canvas id="bg-canvas" aria-hidden="true"></canvas>
 
@@ -33,7 +35,7 @@
 
         <!-- ── Hero ──────────────────────────────────── -->
         <header class="hero">
-            <div class="hero-eyebrow">Est. Always • Lahore Division</div>
+            <div class="hero-eyebrow">Est. Always &nbsp;·&nbsp; Lahore Division</div>
 
             <h1 class="hero-title">
                 <span class="glitch" data-text="INNOCENT">INNOCENT</span>
@@ -69,7 +71,7 @@
 
         <!-- ── Cards Grid ─────────────────────────────── -->
         <main>
-            <p class="section-label">— click a member to see their file —</p>
+            <p class="section-label">— click a member to see their full profile —</p>
             <div class="cards-grid" id="cards-grid">
                 <!-- Cards injected by app.js from data.js -->
             </div>
@@ -83,45 +85,20 @@
 
     </div><!-- end site-wrapper -->
 
-
-    <!-- ══ Profile Modal ═══════════════════════════════ -->
-    <div id="profile-overlay" class="profile-overlay" role="dialog" aria-modal="true">
-        <div id="profile-sheet" class="profile-sheet">
-            <!-- Content injected by profile.js when a card is clicked -->
-        </div>
-    </div>
-
-
-    <!-- ══ Photo Lightbox ══════════════════════════════ -->
-    <div id="lightbox" class="lightbox" role="dialog" aria-modal="true">
-
-        <button id="lightbox-close" class="lightbox-close" aria-label="Close photo">✕</button>
-
-        <button id="lightbox-prev" aria-label="Previous photo" style="
-      position:absolute; left:20px; top:50%; transform:translateY(-50%);
-      width:44px; height:44px; border-radius:50%;
-      background:rgba(255,255,255,0.1); border:none;
-      color:white; font-size:1.4rem; cursor:pointer;
-      display:flex; align-items:center; justify-content:center;
-      transition:background 0.2s;">‹</button>
-
-        <img id="lightbox-img" src="" alt="Full size photo" />
-
-        <button id="lightbox-next" aria-label="Next photo" style="
-      position:absolute; right:20px; top:50%; transform:translateY(-50%);
-      width:44px; height:44px; border-radius:50%;
-      background:rgba(255,255,255,0.1); border:none;
-      color:white; font-size:1.4rem; cursor:pointer;
-      display:flex; align-items:center; justify-content:center;
-      transition:background 0.2s;">›</button>
-
-    </div>
-
-
     <!-- ══ Scripts (order matters) ═════════════════════ -->
-    <script src="js/data.js"></script> <!-- friend data first -->
-    <script src="js/profile.js"></script> <!-- modal logic -->
-    <script src="js/app.js"></script> <!-- render + particles last -->
+    <script src="js/data.js"></script><!-- friend data first -->
+    <script src="js/app.js"></script><!-- render + particles last -->
+
+    <script>
+        // Cursor glow follow effect
+        const glow = document.getElementById('cursor-glow');
+        if (glow) {
+            document.addEventListener('mousemove', e => {
+                glow.style.left = e.clientX + 'px';
+                glow.style.top = e.clientY + 'px';
+            });
+        }
+    </script>
 
 </body>
 

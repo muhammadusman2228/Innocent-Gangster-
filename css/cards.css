@@ -57,6 +57,22 @@
     animation-delay: 0.54s;
 }
 
+.friend-card:nth-child(9) {
+    animation-delay: 0.61s;
+}
+
+.friend-card:nth-child(10) {
+    animation-delay: 0.68s;
+}
+
+.friend-card:nth-child(11) {
+    animation-delay: 0.75s;
+}
+
+.friend-card:nth-child(12) {
+    animation-delay: 0.82s;
+}
+
 @keyframes cardEntrance {
     to {
         opacity: 1;
