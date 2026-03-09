@@ -35,7 +35,7 @@ var GANG = [
         coverPhoto: "assets/friends/member1/cover.jpg",
         photos: [
             "assets/friends/member1/cover.jpg",
-            "assets/friends/member1/photo2.jpg",
+            "assets/friends/member1/image.png",
             "assets/friends/member1/photo3.jpg",
         ],
         biodata: {
@@ -61,10 +61,10 @@ var GANG = [
         funnyIntro: "Has a deep opinion about everything. Nobody asked, but he tells anyway.",
         quote: "\"If the universe is infinite, why does my WiFi not reach the bathroom?\"",
         phone: "923235676576",
-        coverPhoto: "assets/friends/member2/cover.jpg",
+        coverPhoto: "assets/friends/member2/1.png",
         photos: [
             "assets/friends/member2/cover.jpg",
-            "assets/friends/member2/photo2.jpg",
+            "assets/friends/member2/2.png",
             "assets/friends/member2/photo3.jpg",
         ],
         biodata: {
@@ -90,7 +90,7 @@ var GANG = [
         funnyIntro: "Too unpredictable to be predicted. Too legendary to be forgotten.",
         quote: "\"Main billi hoon, rules meri marzi ke hain.\"",
         phone: "923021744686",
-        coverPhoto: "assets/friends/member3/cover.jpg",
+        coverPhoto: "assets/friends/member3/1.jpeg",
         photos: [
             "assets/friends/member3/cover.jpg",
             "assets/friends/member3/photo2.jpg",
@@ -148,7 +148,7 @@ var GANG = [
         funnyIntro: "Looks calm. Has many opinions. Shares zero of them until the perfect moment.",
         quote: "\"I don't need to talk much. My presence does the talking.\"",
         phone: "923114906308",
-        coverPhoto: "assets/friends/member5/cover.jpg",
+        coverPhoto: "assets/friends/member5/image.png",
         photos: [
             "assets/friends/member5/cover.jpg",
             "assets/friends/member5/photo2.jpg",
@@ -202,15 +202,15 @@ var GANG = [
         id: "member7",
         name: "Usman CR",
         nickname: "National Brother",
-        rank: "🏏 Sports Director",
+        rank: "Problem Creator",
         funnyIntro: "Our CR is like a 5G network: High speed, great coverage, but everyone just wants to stay in the 'Friend-Zone' (and the 'Bhai-Zone')",
         quote: "\"We didn't lose. We just ran out of time to win.\"",
         phone: "923170827409",
-        coverPhoto: "assets/friends/member7/cover.png",
+        coverPhoto: "assets/friends/member7/1.png",
         photos: [
-            "assets/friends/member7/photo1.jpg",
-            "assets/friends/member7/photo2.jpg",
-            "assets/friends/member7/photo3.jpg",
+            "assets/friends/member7/cover.png",
+            "assets/friends/member7/2.png",
+            "assets/friends/member7/3.png",
         ],
         biodata: {
             realName: "Usman",
@@ -237,9 +237,9 @@ var GANG = [
         phone: "923014752995",
         coverPhoto: "assets/friends/member8/cover.png",
         photos: [
-            "assets/friends/member8/photo1.jpg",
-            "assets/friends/member8/photo2.jpg",
-            "assets/friends/member8/photo3.jpg",
+            "assets/friends/member8/1.png",
+            "assets/friends/member8/2.png",
+            "assets/friends/member8/3.png",
         ],
         biodata: {
             realName: "Farhan Latif",
@@ -264,11 +264,11 @@ var GANG = [
         funnyIntro: "90% of his sentences start with 'bhai suno'. 100% of them end in chaos.",
         quote: "\"I'm not the problem. I'm a limited edition feature.\"",
         phone: "923206852856",
-        coverPhoto: "assets/friends/member9/cover.jpg",
+        coverPhoto: "assets/friends/member9/1.png",
         photos: [
-            "assets/friends/member9/photo1.jpg",
-            "assets/friends/member9/photo2.jpg",
-            "assets/friends/member9/photo3.jpg",
+            "assets/friends/member9/2.png",
+            "assets/friends/member9/3.png",
+            "assets/friends/member9/4.png",
         ],
         biodata: {
             realName: "Aftab Akram",
@@ -293,7 +293,7 @@ var GANG = [
         funnyIntro: "I never raise my hand. I am too busy raising hell, very discreetly.",
         quote: "\"Everyone needs a friend with a car. I am that friend.\"",
         phone: "923477215489",
-        coverPhoto: "assets/friends/member10/cover.jpg",
+        coverPhoto: "assets/friends/member10/image.png",
         photos: [
             "assets/friends/member10/photo1.jpg",
             "assets/friends/member10/photo2.jpg",
@@ -322,7 +322,7 @@ var GANG = [
         funnyIntro: "Organises every hangout. Nobody shows up. Still organises the next one.",
         quote: "\"This time it will definitely happen. I have a spreadsheet.\"",
         phone: "923000629795",
-        coverPhoto: "assets/friends/member11/cover.jpg",
+        coverPhoto: "assets/friends/member11/image.png",
         photos: [
             "assets/friends/member11/photo1.jpg",
             "assets/friends/member11/photo2.jpg",
@@ -351,9 +351,9 @@ var GANG = [
         funnyIntro: " I am not saying I was absent, I was just occupying an alternate dimension that day",
         quote: "\"Wait, did the attendance call end? I am literally right here (in spirit)\"",
         phone: "923266047025",
-        coverPhoto: "assets/friends/member12/cover.jpg",
+        coverPhoto: "assets/friends/member12/image.png",
         photos: [
-            "assets/friends/member12/photo1.jpg",
+            "assets/friends/member12/cover.png",
             "assets/friends/member12/photo2.jpg",
             "assets/friends/member12/photo3.jpg",
         ],
