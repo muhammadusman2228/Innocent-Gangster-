@@ -35,8 +35,8 @@ var GANG = [
         coverPhoto: "assets/friends/member1/cover.jpg",
         photos: [
             "assets/friends/member1/cover.jpg",
+            "assets/friends/member1/1.png",
             "assets/friends/member1/image.png",
-            "assets/friends/member1/photo3.jpg",
         ],
         biodata: {
             realName: "Muhammad Usman",
