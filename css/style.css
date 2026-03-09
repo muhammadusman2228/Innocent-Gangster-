@@ -124,15 +124,10 @@ body {
     margin-bottom: 8px;
     animation: fadeInUp 0.8s ease 0.1s both;
     position: relative;
-}
-
-/* Glitch effect on title */
-.glitch {
-    position: relative;
-    display: inline-block;
     color: var(--white);
 }
 
+/* Glitch effect on title */
 .glitch::before,
 .glitch::after {
     content: attr(data-text);
@@ -143,17 +138,21 @@ body {
     height: 100%;
     font-family: inherit;
     font-size: inherit;
+    background: inherit;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .glitch::before {
-    color: var(--green);
+    -webkit-text-fill-color: var(--green);
     clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
     transform: translate(-3px, -1px);
     animation: glitch-top 3s infinite linear alternate-reverse;
 }
 
 .glitch::after {
-    color: var(--purple);
+    -webkit-text-fill-color: var(--purple);
     clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
     transform: translate(3px, 1px);
     animation: glitch-bottom 2.5s infinite linear alternate-reverse;
@@ -413,33 +412,34 @@ body {
     }
 }
 
-/* ── Hero title shimmer text effect ─────────────────── */
+/* ── Hero title shimmer – applied to glitch spans ––––––––––– */
 .hero-title {
-    background: linear-gradient(90deg,
-            var(--white) 0%,
-            var(--green) 20%,
-            var(--white) 40%,
-            var(--white) 60%,
-            var(--purple) 80%,
-            var(--white) 100%);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: fadeInUp 0.8s ease 0.1s both, shimmer 6s linear 1.5s infinite;
     font-family: var(--font-heading);
     font-size: clamp(4rem, 12vw, 10rem);
     line-height: 0.9;
     letter-spacing: 0.02em;
     margin-bottom: 8px;
     position: relative;
+    animation: fadeInUp 0.8s ease 0.1s both;
+    /* Keep fadeInUp for the main title */
 }
 
-/* ── Glitch layers need explicit color override ──────── */
 .glitch {
     position: relative;
-    display: inline;
+    display: inline-block;
+    color: var(--white);
+    /* Default color for glitch text */
+    background: linear-gradient(90deg,
+            var(--white) 0%,
+            var(--green) 25%,
+            var(--white) 50%,
+            var(--purple) 75%,
+            var(--white) 100%);
+    background-size: 250% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
+    animation: shimmer 6s linear 1s infinite;
 }
 
 /* ── Gang stat numbers glow ──────────────────────────── */
